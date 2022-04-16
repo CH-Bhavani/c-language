@@ -1,6 +1,7 @@
 /*Given a Linked List which contains names write a function to 
 print from n elements 
 */
+//sol-1 non-recursion
 
 #include<stdio.h>
 #include<string.h>
@@ -58,4 +59,66 @@ void main()
     printf("\n\n");
     printFromNElements(num);
   }
+}
+
+
+
+//sol-2 recursion
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct node
+{
+    char arr[100];
+    struct node* link;
+};
+struct node* root=NULL;
+void createNode(char arr[])
+{
+ struct node* temp;
+ temp=(struct node*)malloc(sizeof(struct node));
+ strcpy(temp->arr,arr);
+ temp->link=NULL;
+ if(root==NULL)
+ {
+     root=temp;
+ }
+ else
+ {
+     struct node* p=root;
+     while(p->link!=NULL)
+     {
+         p=p->link;
+     }
+     p->link=temp;
+ }
+}
+
+void displayFrom(int n,int count,struct node* temp)
+{
+    if(temp==NULL)
+    return;
+    
+    if(count>=n)
+    printf("%s\n",temp->arr);
+    displayFrom(n,count+1,temp->link);
+}
+
+int main()
+{
+    int n;
+    scanf("%d",&n);
+    while(n!=0)
+    {
+        char arr[50];
+        scanf("%s",arr);
+        createNode(arr);
+        n--;
+    }
+    scanf("%d",&n);
+    struct node* temp=root;
+    displayFrom(n,1,temp);
+   return 0; 
 }
